@@ -1,0 +1,239 @@
+echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christopher Chisi - Data Science Portfolio</title>
+    <style>
+    /* Your CSS here */
+    :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: #3498db;
+        --text-color: #333;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        color: var(--text-color);
+    }
+    
+    header {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+    
+    .header-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    nav {
+        background-color: var(--secondary-color);
+        padding: 1rem;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 1rem;
+        padding: 0.5rem;
+        transition: color 0.3s;
+    }
+    
+    nav a:hover {
+        color: var(--accent-color);
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+    
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .skill-category {
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .experience-item {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border-left: 4px solid var(--accent-color);
+        background-color: #f8f9fa;
+    }
+    
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    .contact-item {
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .contact-item a {
+        color: var(--accent-color);
+        text-decoration: none;
+    }
+    
+    footer {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+        
+        nav a {
+            display: block;
+            margin: 0.5rem 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Christopher Chisi</h1>
+            <p>Aspiring Data Scientist | Development Economics | Statistical Modeling</p>
+        </div>
+    </header>
+    
+    <nav>
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#activities">Activities</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <p>I am an aspiring data scientist with a strong background in development economics, statistical modeling, and research methodologies. My dedication lies in applying data science principles to drive sustainable development initiatives.</p>
+        </section>
+        
+        <section id="education">
+            <h2>Education</h2>
+            <div class="experience-item">
+                <h3>MSc in Applied Data Science</h3>
+                <p>Lilongwe University of Agriculture and Natural Resources (LUANAR)</p>
+                <p>Sept 2024 – Sept 2026</p>
+                <p>Coursework: Programming for Data Science, Machine Learning, Technical Writing</p>
+            </div>
+            <div class="experience-item">
+                <h3>BSc in Development Economics</h3>
+                <p>Lilongwe University of Agriculture and Natural Resources (LUANAR)</p>
+                <p>Nov 2019 – May 2024</p>
+                <p>GPA: 3.23/4.0</p>
+                <p>Coursework: Econometrics, Research Methods, Theories of Economic Growth, Health Economics</p>
+            </div>
+        </section>
+        
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="experience-item">
+                <h3>Research Assistant</h3>
+                <p>LUANAR – Chikwawa, Malawi | July 2024 – Oct 2024</p>
+                <ul>
+                    <li>Conducted in-depth interviews with over 30 household heads in rural areas</li>
+                    <li>Performed data cleaning exercises to improve data accuracy by over 90%</li>
+                    <li>Recorded financial expenses of households</li>
+                    <li>Supported GPS-enhanced location identification</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>Sales Intern</h3>
+                <p>Diocese of Mzuzu – Mzuzu, Malawi | July 2022 – Sept 2022</p>
+                <ul>
+                    <li>Handled accounts payable and receivable</li>
+                    <li>Maintained accurate financial records</li>
+                    <li>Created inventory visualizations using Excel</li>
+                    <li>Managed customer queries regarding deliveries</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Tools and Languages</h3>
+                    <p>Python, LaTeX, R, SQL</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Quantitative Research</h3>
+                    <p>Econometric Modeling, Data Cleaning, STATA, Excel</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Languages</h3>
+                    <p>English, Chichewa (Fluent), Tumbuka (Native), Ngonde (Basic)</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="activities">
+            <h2>Activities</h2>
+            <div class="experience-item">
+                <h3>Youth Well-Being Prize Finalist, USAID</h3>
+                <p>Nov 2023 - Jun 2024</p>
+                <p>Selected from 4,300 applications as one of 50 finalists to participate in USAID's Youth Well-Being Prize Competition. Created solutions for young people in areas of mental health, digital harm, safeguarding, gender-based violence, and climate change.</p>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <a href="mailto:kwawachi2@gmail.com">kwawachi2@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <h3>Phone</h3>
+                    <p>099 540 14 24</p>
+                </div>
+                <div class="contact-item">
+                    <h3>LinkedIn</h3>
+                    <a href="https://linkedin.com/in/christopherchisi/" target="_blank">linkedin.com/in/christopherchisi/</a>
+                </div>
+                <div class="contact-item">
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/kwawachi" target="_blank">github.com/kwawachi</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Christopher Chisi. All rights reserved.</p>
+    </footer>
+</body>
+</html>' > index.html
