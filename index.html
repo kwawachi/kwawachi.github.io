@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Christopher Kwawa Chisi — Data Analyst & ML Engineer</title>
+<meta name="description" content="Portfolio of Christopher Kwawa Chisi — Data Analyst, Junior Data Scientist, MSc Applied Data Science, Malawi." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+<style>
+/* ═══════════════ DESIGN TOKENS ═══════════════ */
+:root {
+  --bg:        #070B14;
+  --bg2:       #0D1321;
+  --bg3:       #111827;
+  --surface:   rgba(255,255,255,0.04);
+  --border:    rgba(255,255,255,0.08);
+  --cyan:      #00D9FF;
+  --cyan-dim:  rgba(0,217,255,0.12);
+  --amber:     #F59E0B;
+  --amber-dim: rgba(245,158,11,0.12);
+  --green:     #10B981;
+  --text:      #E8EDF5;
+  --muted:     #6B7A99;
+  --display:   'Syne', sans-serif;
+  --mono:      'DM Mono', monospace;
+  --body:      'DM Sans', sans-serif;
+  --ease:      cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ═══════════════ RESET ═══════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+ul { list-style: none; }
+
+/* ═══════════════ NOISE OVERLAY ═══════════════ */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none; z-index: 0; opacity: 0.5;
+}
+
+/* ═══════════════ CURSOR ═══════════════ */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--cyan);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, width 0.3s var(--ease), height 0.3s var(--ease), opacity 0.3s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(0,217,255,0.4);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: transform 0.18s var(--ease), width 0.3s var(--ease), height 0.3s var(--ease);
+}
+
+/* ═══════════════ SCROLLBAR ═══════════════ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+/* ═══════════════ NAV ═══════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(7,11,20,0.8);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.3s;
+}
+.nav-logo {
+  font-family: var(--display);
+  font-weight: 800; font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--cyan); }
+.nav-links { display: flex; gap: 2.2rem; }
+.nav-links a {
+  font-family: var(--mono); font-size: 0.78rem;
+  color: var(--muted); letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -3px;
+  width: 0; height: 1px; background: var(--cyan);
+  transition: width 0.3s var(--ease);
+}
+.nav-links a:hover { color: var(--cyan); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  font-family: var(--mono); font-size: 0.75rem;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--cyan);
+  color: var(--cyan); border-radius: 2px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--cyan); color: var(--bg); }
+
+/* ═══════════════ HERO ═══════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 8rem 3rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,217,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,217,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+.hero-glow {
+  position: absolute; top: 20%; right: 10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,217,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  animation: pulse 6s ease-in-out infinite;
+}
+.hero-glow2 {
+  position: absolute; bottom: 10%; left: 5%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  animation: pulse 8s ease-in-out infinite reverse;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.1);} }
+
+.hero-tag {
+  font-family: var(--mono); font-size: 0.75rem;
+  color: var(--cyan); letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.6rem;
+  opacity: 0; animation: fadeUp 0.6s var(--ease) 0.2s forwards;
+}
+.hero-tag::before {
+  content: ''; display: block;
+  width: 32px; height: 1px; background: var(--cyan);
+}
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 800; line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.4rem;
+  opacity: 0; animation: fadeUp 0.7s var(--ease) 0.35s forwards;
+}
+.hero-name .accent { color: var(--cyan); }
+.hero-subtitle {
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  color: var(--muted);
+  margin-bottom: 1.8rem;
+  opacity: 0; animation: fadeUp 0.7s var(--ease) 0.5s forwards;
+}
+.hero-subtitle .typed-wrap { display: inline; }
+#typed-text { color: var(--amber); }
+.cursor-blink {
+  display: inline-block; width: 2px; height: 1em;
+  background: var(--amber); margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50%{opacity:0;} }
+
+.hero-bio {
+  max-width: 520px;
+  font-size: 1rem; color: var(--muted); line-height: 1.8;
+  margin-bottom: 2.4rem;
+  opacity: 0; animation: fadeUp 0.7s var(--ease) 0.65s forwards;
+}
+.hero-bio strong { color: var(--text); }
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp 0.7s var(--ease) 0.8s forwards;
+}
+.btn-primary {
+  font-family: var(--mono); font-size: 0.82rem;
+  padding: 0.8rem 2rem;
+  background: var(--cyan); color: var(--bg);
+  border-radius: 2px; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,217,255,0.3); }
+.btn-ghost {
+  font-family: var(--mono); font-size: 0.82rem;
+  padding: 0.8rem 2rem;
+  border: 1px solid var(--border); color: var(--muted);
+  border-radius: 2px; letter-spacing: 0.05em; text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  opacity: 0; animation: fadeUp 0.7s var(--ease) 1.2s forwards;
+}
+.hero-scroll span { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+.scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  animation: scrollDrop 2s ease-in-out infinite;
+}
+@keyframes scrollDrop { 0%,100%{opacity:1;transform:scaleY(1) translateY(0);} 50%{opacity:0.5;transform:scaleY(0.8) translateY(6px);} }
+
+/* ═══════════════ SECTIONS ═══════════════ */
+section { padding: 6rem 3rem; position: relative; }
+.section-label {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--cyan); letter-spacing: 0.14em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.8rem;
+  margin-bottom: 0.6rem;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: var(--cyan);
+}
+.section-title {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.03em; line-height: 1.1;
+  margin-bottom: 3.5rem;
+}
+.section-title em { color: var(--cyan); font-style: normal; }
+
+/* ═══════════════ ABOUT ═══════════════ */
+#about { background: var(--bg2); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: start;
+}
+.about-photo-wrap {
+  position: relative;
+}
+.about-photo-frame {
+  position: relative; display: inline-block;
+}
+.about-photo-frame::before {
+  content: '';
+  position: absolute; top: 16px; left: 16px;
+  right: -16px; bottom: -16px;
+  border: 1px solid var(--cyan); border-radius: 4px;
+  opacity: 0.4;
+}
+.about-photo {
+  width: 100%; max-width: 360px;
+  aspect-ratio: 3/4; object-fit: cover;
+  border-radius: 4px;
+  filter: grayscale(20%) contrast(1.05);
+}
+.about-photo-placeholder {
+  width: 100%; max-width: 360px;
+  aspect-ratio: 3/4;
+  background: linear-gradient(135deg, var(--bg3) 0%, #0A1628 100%);
+  border-radius: 4px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1rem;
+  border: 1px solid var(--border);
+}
+.about-photo-placeholder .initials {
+  font-family: var(--display); font-size: 5rem; font-weight: 800;
+  color: var(--cyan); opacity: 0.6;
+}
+.about-photo-placeholder span {
+  font-family: var(--mono); font-size: 0.7rem;
+  color: var(--muted); letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.about-stat-pills {
+  display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap;
+}
+.stat-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 0.4rem 1rem;
+  font-family: var(--mono); font-size: 0.7rem;
+  color: var(--muted);
+}
+.stat-pill strong { color: var(--cyan); }
+
+.about-content p { color: var(--muted); font-size: 1.0rem; line-height: 1.85; margin-bottom: 1.2rem; }
+.about-content p strong { color: var(--text); }
+.skills-grid {
+  margin-top: 2rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.6rem;
+}
+.skill-tag {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.5rem 0.7rem;
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--muted); text-align: center;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.skill-tag:hover { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-dim); }
+
+/* ═══════════════ PROJECTS ═══════════════ */
+#projects { background: var(--bg); }
+.projects-bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 1.2rem;
+}
+/* EmpowerBros — large featured */
+.proj-card:nth-child(1) { grid-column: span 7; }
+/* CARP-E */
+.proj-card:nth-child(2) { grid-column: span 5; }
+/* DHS */
+.proj-card:nth-child(3) { grid-column: span 5; }
+/* SMARTEX */
+.proj-card:nth-child(4) { grid-column: span 7; }
+
+.proj-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s var(--ease);
+  cursor: default;
+}
+.proj-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.proj-card:hover { border-color: rgba(0,217,255,0.3); transform: translateY(-3px); }
+.proj-card:hover::before { opacity: 1; }
+
+.proj-visual {
+  width: 100%; border-radius: 4px;
+  margin-bottom: 1.5rem; overflow: hidden;
+}
+.proj-vis-inner {
+  width: 100%; aspect-ratio: 16/8;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+/* EmpowerBros */
+.vis-empowerbros {
+  background: linear-gradient(135deg, #0D2137 0%, #0A3D62 50%, #051A2E 100%);
+}
+.vis-empowerbros .vis-icon { font-size: 3.5rem; }
+/* CARP-E */
+.vis-carpe {
+  background: linear-gradient(135deg, #0D2B0D 0%, #1A4A1A 50%, #0A1A0A 100%);
+}
+.vis-carpe .vis-icon { font-size: 3.5rem; }
+/* DHS */
+.vis-dhs {
+  background: linear-gradient(135deg, #1A1020 0%, #2D1A3D 50%, #120C18 100%);
+}
+.vis-dhs .vis-icon { font-size: 3.5rem; }
+/* SMARTEX */
+.vis-smartex {
+  background: linear-gradient(135deg, #1A1000 0%, #3D2C00 50%, #1A1000 100%);
+}
+.vis-smartex .vis-icon { font-size: 3.5rem; }
+
+.vis-grid-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.vis-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(0,217,255,0.15) 0%, transparent 70%);
+}
+.vis-glow-green {
+  background: radial-gradient(circle at 50% 50%, rgba(16,185,129,0.2) 0%, transparent 70%);
+}
+.vis-glow-purple {
+  background: radial-gradient(circle at 50% 50%, rgba(139,92,246,0.2) 0%, transparent 70%);
+}
+.vis-glow-amber {
+  background: radial-gradient(circle at 50% 50%, rgba(245,158,11,0.2) 0%, transparent 70%);
+}
+.vis-icon { position: relative; z-index: 1; }
+
+.proj-number {
+  font-family: var(--mono); font-size: 0.7rem;
+  color: var(--muted); letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.proj-title {
+  font-family: var(--display); font-weight: 700;
+  font-size: 1.25rem; letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.proj-desc {
+  font-size: 0.88rem; color: var(--muted); line-height: 1.65;
+  margin-bottom: 1.2rem;
+}
+.proj-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.proj-tag {
+  font-family: var(--mono); font-size: 0.65rem;
+  padding: 0.25rem 0.65rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 2px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.proj-links { display: flex; gap: 0.8rem; align-items: center; }
+.proj-link {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--cyan); letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: gap 0.2s;
+}
+.proj-link:hover { gap: 0.7rem; }
+.proj-link-ghost {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--muted); letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: color 0.2s, gap 0.2s;
+}
+.proj-link-ghost:hover { color: var(--text); gap: 0.7rem; }
+.proj-award {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--amber); letter-spacing: 0.06em;
+  background: var(--amber-dim);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 2px; padding: 0.25rem 0.65rem;
+  margin-bottom: 0.8rem;
+}
+
+/* ═══════════════ EXPERIENCE ═══════════════ */
+#experience { background: var(--bg2); }
+.exp-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+}
+.exp-tabs {
+  display: flex; flex-direction: column; gap: 0;
+  border-left: 1px solid var(--border);
+}
+.exp-tab {
+  padding: 1rem 1.5rem;
+  font-family: var(--mono); font-size: 0.78rem;
+  color: var(--muted); letter-spacing: 0.04em;
+  cursor: pointer; transition: color 0.2s;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  line-height: 1.5;
+}
+.exp-tab.active { color: var(--cyan); border-left-color: var(--cyan); }
+.exp-tab:hover:not(.active) { color: var(--text); }
+.exp-tab .tab-co { display: block; font-weight: 500; }
+.exp-tab .tab-date { font-size: 0.65rem; color: var(--muted); opacity: 0.7; }
+
+.exp-panels { position: relative; }
+.exp-panel { display: none; }
+.exp-panel.active { display: block; animation: fadeIn 0.35s var(--ease); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+
+.exp-role {
+  font-family: var(--display); font-weight: 700;
+  font-size: 1.4rem; letter-spacing: -0.02em; margin-bottom: 0.3rem;
+}
+.exp-company { color: var(--cyan); font-size: 1rem; margin-bottom: 0.2rem; }
+.exp-date {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--muted); margin-bottom: 1.6rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.exp-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.exp-dot.past { background: var(--muted); box-shadow: none; animation: none; }
+
+.exp-bullets { display: flex; flex-direction: column; gap: 0.9rem; }
+.exp-bullet {
+  display: flex; gap: 1rem; align-items: flex-start;
+  font-size: 0.92rem; color: var(--muted); line-height: 1.7;
+}
+.exp-bullet::before {
+  content: '▹';
+  color: var(--cyan); flex-shrink: 0; margin-top: 0.1rem;
+}
+
+/* ═══════════════ EDUCATION ═══════════════ */
+#education { background: var(--bg); }
+.edu-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+.edu-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 2rem;
+  transition: border-color 0.3s;
+}
+.edu-card:hover { border-color: rgba(0,217,255,0.25); }
+.edu-badge {
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.edu-badge::before {
+  content: ''; display: block;
+  width: 16px; height: 1px; background: var(--cyan);
+}
+.edu-degree {
+  font-family: var(--display); font-weight: 700;
+  font-size: 1.15rem; margin-bottom: 0.3rem; line-height: 1.3;
+}
+.edu-uni { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.8rem; }
+.edu-gpa {
+  font-family: var(--mono); font-size: 0.8rem;
+  color: var(--amber); margin-bottom: 1rem;
+}
+.edu-courses {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.course-tag {
+  font-family: var(--mono); font-size: 0.62rem;
+  padding: 0.2rem 0.6rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 2px; color: var(--muted);
+}
+
+/* ═══════════════ AWARDS ═══════════════ */
+#awards { background: var(--bg2); }
+.awards-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.award-item {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1.2rem 1.5rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.award-item:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.award-year {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--amber); flex-shrink: 0; padding-top: 0.1rem;
+}
+.award-text { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+.award-text strong { color: var(--text); display: block; }
+
+/* ═══════════════ STATS ═══════════════ */
+#stats { background: var(--bg); }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem; margin-bottom: 3rem;
+}
+.stats-img-row {
+  display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;
+}
+.stats-img-row img { border-radius: 6px; max-width: 100%; }
+
+/* ═══════════════ CONTACT ═══════════════ */
+#contact { background: var(--bg2); }
+.contact-wrap {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+}
+.contact-headline {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.2rem;
+}
+.contact-headline em { color: var(--cyan); font-style: normal; }
+.contact-desc { color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 2rem; }
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+.contact-link {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 4px; transition: border-color 0.2s, transform 0.2s;
+}
+.contact-link:hover { border-color: rgba(0,217,255,0.3); transform: translateX(4px); }
+.contact-link-icon { font-size: 1.1rem; flex-shrink: 0; }
+.contact-link-text { font-size: 0.88rem; color: var(--muted); line-height: 1.3; }
+.contact-link-text strong { display: block; color: var(--text); font-size: 0.95rem; }
+.contact-link-arrow { margin-left: auto; color: var(--muted); font-size: 0.8rem; transition: color 0.2s; }
+.contact-link:hover .contact-link-arrow { color: var(--cyan); }
+
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-field label {
+  font-family: var(--mono); font-size: 0.68rem;
+  color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.form-field input, .form-field textarea {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 3px; padding: 0.75rem 1rem;
+  color: var(--text); font-family: var(--body); font-size: 0.9rem;
+  outline: none; transition: border-color 0.2s;
+  resize: vertical;
+}
+.form-field input:focus, .form-field textarea:focus {
+  border-color: var(--cyan);
+}
+.form-field textarea { min-height: 110px; }
+
+/* ═══════════════ FOOTER ═══════════════ */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 2rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy {
+  font-family: var(--mono); font-size: 0.72rem; color: var(--muted);
+}
+.footer-copy span { color: var(--cyan); }
+.footer-socials { display: flex; gap: 1.2rem; }
+.social-btn {
+  font-family: var(--mono); font-size: 0.7rem;
+  color: var(--muted); letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.social-btn:hover { color: var(--cyan); }
+
+/* ═══════════════ SCROLL REVEAL ═══════════════ */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ═══════════════ FADE UP ═══════════════ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+/* ═══════════════ MOBILE ═══════════════ */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  #hero { padding: 7rem 1.5rem 4rem; }
+  section { padding: 4rem 1.5rem; }
+  .about-grid, .exp-layout, .contact-wrap, .edu-cards { grid-template-columns: 1fr; gap: 2.5rem; }
+  .projects-bento { grid-template-columns: 1fr; }
+  .proj-card:nth-child(n) { grid-column: span 1; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; text-align: center; }
+  .stats-img-row img { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-logo">C<span>.</span>Chisi</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="assets/resume.pdf" download>Download CV</a>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-tag">Available for opportunities</div>
+
+  <h1 class="hero-name">
+    Christopher<br /><span class="accent">Kwawa Chisi</span>
+  </h1>
+
+  <div class="hero-subtitle">
+    <span class="typed-wrap"><span id="typed-text"></span><span class="cursor-blink"></span></span>
+  </div>
+
+  <p class="hero-bio">
+    <strong>MSc Applied Data Science</strong> candidate at LUANAR (GPA 3.35/4.0) &amp;
+    <strong>Research Associate Intern</strong> at Institute of Rural Development producing high quality consultancy proposals that are specific, well-written and appealing to stakeholders across
+    agriculture, finance, and social development in Africa.
+  </p>
+
+  <div class="hero-actions">
+    <a class="btn-primary" href="#projects">View Projects</a>
+    <a class="btn-ghost" href="#contact">Get in Touch</a>
+  </div>
+
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<section id="about">
+  <div class="section-label">01 / About</div>
+  <h2 class="section-title">Who I <em>Am</em></h2>
+
+  <div class="about-grid">
+    <div class="about-photo-wrap reveal">
+      <div class="about-photo-frame">
+        <!-- Replace src with your actual photo path -->
+        <img src="assets/profile.jpg" alt="Christopher Chisi" class="about-photo"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="about-photo-placeholder" style="display:none;">
+          <div class="initials">CKC</div>
+          <span>Add assets/profile.jpg</span>
+        </div>
+      </div>
+      <div class="about-stat-pills">
+        <div class="stat-pill">GPA <strong>3.35</strong> / 4.0</div>
+        <div class="stat-pill"><strong>4+</strong> years experience</div>
+        <div class="stat-pill">Based in <strong>Malawi 🇲🇼</strong></div>
+        <div class="stat-pill">USAID <strong>Top 50</strong> Finalist</div>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <p class="reveal">
+        I am a <strong>Data Scientist</strong> completing an MSc in Applied Data Science at LUANAR, building on a BSc in Development Economics. My work sits at the intersection of rigorous statistical methodology and practical engineering. I build things that actually run in production, from offline-first CNN models for Malawian farmers to SQL-backed ETL pipelines for multi-source business data and advocacy campaigns.
+      </p>
+      <p class="reveal reveal-delay-1">
+        At <strong>The Pangolins</strong>, working as a Junior Data Scientist, I develop machine learning models for risk assessment and predictive analytics, design GDPR-compliant data pipelines, and produce Power BI and Tableau dashboards that translate complex outputs into management decisions. I bring the same rigour to research — improving dataset accuracy by 90% on the SMARTEX climate project, and co-designing the KPI framework for a USAID-recognised youth well-being programme.
+      </p>
+      <p class="reveal reveal-delay-2">
+        I am passionate about applying <strong>data science for social impact</strong> across agriculture, health, and economic development — and I write clean, documented code that other analysts can actually read.
+      </p>
+
+      <div class="skills-grid reveal reveal-delay-3">
+        <div class="skill-tag">Python</div>
+        <div class="skill-tag">SQL</div>
+        <div class="skill-tag">R</div>
+        <div class="skill-tag">STATA</div>
+        <div class="skill-tag">TensorFlow</div>
+        <div class="skill-tag">Keras</div>
+        <div class="skill-tag">scikit-learn</div>
+        <div class="skill-tag">pandas</div>
+        <div class="skill-tag">NumPy</div>
+        <div class="skill-tag">OpenCV</div>
+        <div class="skill-tag">Power BI</div>
+        <div class="skill-tag">Tableau</div>
+        <div class="skill-tag">Excel</div>
+        <div class="skill-tag">SPSS</div>
+        <div class="skill-tag">Git / GitHub</div>
+        <div class="skill-tag">ETL Pipelines</div>
+        <div class="skill-tag">PostgreSQL</div>
+        <div class="skill-tag">GDPR / DG</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PROJECTS ═══════════════ -->
+<section id="projects">
+  <div class="section-label">02 / Projects</div>
+  <h2 class="section-title">Selected <em>Work</em></h2>
+
+  <div class="projects-bento">
+
+    <!-- EmpowerBros — Featured -->
+    <div class="proj-card reveal">
+      <div class="proj-visual">
+        <div class="proj-vis-inner vis-empowerbros">
+          <div class="vis-grid-lines"></div>
+          <div class="vis-glow"></div>
+          <div class="vis-icon">🌟</div>
+        </div>
+      </div>
+      <div class="proj-award">🏆 USAID Youth Well-Being Prize — Top 50 / 4,300 Global Applications</div>
+      <div class="proj-number">Project 01</div>
+      <div class="proj-title">EmpowerBros Youth Project</div>
+      <div class="proj-desc">
+        Data-driven youth well-being platform recognised by USAID and the Learning Planet Institute. Designed a KPI monitoring framework, baseline assessments, and stakeholder visualisations for an international youth programme.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">Power BI</span>
+        <span class="proj-tag">Excel</span>
+        <span class="proj-tag">M&amp;E</span>
+        <span class="proj-tag">Vercel</span>
+      </div>
+      <div class="proj-links">
+        <a class="proj-link" href="https://empowerbros-kappa.vercel.app" target="_blank">Live Site →</a>
+        <a class="proj-link-ghost" href="https://projects.learning-planet.org/projects/empowerbros-rebuilding-peer-led-mental-health/summary" target="_blank">Youth Design Challenge ↗</a>
+      </div>
+    </div>
+
+    <!-- CARP-E -->
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-visual">
+        <div class="proj-vis-inner vis-carpe">
+          <div class="vis-grid-lines"></div>
+          <div class="vis-glow vis-glow-green"></div>
+          <div class="vis-icon">🌱</div>
+        </div>
+      </div>
+      <div class="proj-number">Project 02</div>
+      <div class="proj-title">CARP-E AI — Groundnut Disease Detection</div>
+      <div class="proj-desc">
+        Awarded research grant for an AI-powered deep learning classifier (VGG16, ResNet) trained on 5,000+ images to detect groundnut disease, with offline-first deployment for low-connectivity rural environments.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">TensorFlow</span>
+        <span class="proj-tag">Keras</span>
+        <span class="proj-tag">OpenCV</span>
+        <span class="proj-tag">CNNs</span>
+      </div>
+      <div class="proj-links">
+        <a class="proj-link-ghost" href="https://github.com/kwawachi/carpe-ai" target="_blank">Coming Soon ↗</a>
+      </div>
+    </div>
+
+    <!-- Malawi DHS -->
+    <div class="proj-card reveal reveal-delay-2">
+      <div class="proj-visual">
+        <div class="proj-vis-inner vis-dhs">
+          <div class="vis-grid-lines"></div>
+          <div class="vis-glow vis-glow-purple"></div>
+          <div class="vis-icon">📊</div>
+        </div>
+      </div>
+      <div class="proj-number">Project 03</div>
+      <div class="proj-title">Malawi DHS — Women's Health Insurance Analysis</div>
+      <div class="proj-desc">
+        BSc thesis applying econometric demand analysis to the 2019 Malawi DHS survey — identifying how media exposure and demographic factors influence women's private health insurance uptake.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">R</span>
+        <span class="proj-tag">STATA</span>
+        <span class="proj-tag">Econometrics</span>
+        <span class="proj-tag">Logistic Regression</span>
+      </div>
+      <div class="proj-links">
+        <a class="proj-link-ghost" href="https://github.com/kwawachi/malawi-dhs-analysis" target="_blank">Coming Soon ↗</a>
+      </div>
+    </div>
+
+</section>
+
+<!-- ═══════════════ EXPERIENCE ═══════════════ -->
+<section id="experience">
+  <div class="section-label">03 / Experience</div>
+  <h2 class="section-title">Where I've <em>Worked</em></h2>
+
+  <div class="exp-layout">
+    <div class="exp-tabs" id="expTabs">
+      <div class="exp-tab active" data-panel="pangolins">
+        <span class="tab-co">The Pangolins</span>
+        <span class="tab-date">Aug 2025 – Present</span>
+      </div>
+      <div class="exp-tab" data-panel="ird">
+        <span class="tab-co">Institute for Rural Dev.</span>
+        <span class="tab-date">Apr 2026 – Present</span>
+      </div>
+      <div class="exp-tab" data-panel="makoka">
+        <span class="tab-co">Makoka & Associates</span>
+        <span class="tab-date">Aug – Nov 2025</span>
+      </div>
+      <div class="exp-tab" data-panel="smartex">
+        <span class="tab-co">LUANAR / SMARTEX</span>
+        <span class="tab-date">Jul – Dec 2024</span>
+      </div>
+      <div class="exp-tab" data-panel="theirworld">
+        <span class="tab-co">Theirworld</span>
+        <span class="tab-date">Feb 2024 – Present</span>
+      </div>
+    </div>
+
+    <div class="exp-panels">
+
+      <div class="exp-panel active" id="panel-pangolins">
+        <div class="exp-role">Junior Data Scientist</div>
+        <div class="exp-company">The Pangolins</div>
+        <div class="exp-date">
+          <div class="exp-dot"></div>
+          Aug 2025 – Present · Hybrid (Blantyre / Lilongwe)
+        </div>
+        <ul class="exp-bullets">
+          <li class="exp-bullet">Develop and deploy machine learning models for predictive analytics and risk assessment — directly comparable to credit scoring and fraud detection workflows in financial services.</li>
+          <li class="exp-bullet">Design and maintain SQL databases and ETL pipelines ensuring GDPR-compliant data quality across multiple sources.</li>
+          <li class="exp-bullet">Build interactive Power BI and Tableau dashboards translating complex analytical outputs into actionable management insights.</li>
+          <li class="exp-bullet">Author technical documentation, SOPs, and quarterly analytical reports for cross-functional teams and senior stakeholders.</li>
+        </ul>
+      </div>
+
+      <div class="exp-panel" id="panel-ird">
+        <div class="exp-role">Research Associate Intern</div>
+        <div class="exp-company">Institute for Rural Development</div>
+        <div class="exp-date">
+          <div class="exp-dot"></div>
+          April 2026 – Present · Lilongwe, Malawi
+        </div>
+        <ul class="exp-bullets">
+          <li class="exp-bullet">Synthesise large comprehensive consultancy calls into structured and understandable papers for management and donor stakeholders.</li>
+          <li class="exp-bullet">Design and manage data collection instruments and coordinate field operations with rigorous quality standards and audit-ready records.</li>
+          <li class="exp-bullet">Train field teams on data capture applications, QA protocols, and data management procedures.</li>
+        </ul>
+      </div>
+
+      <div class="exp-panel" id="panel-makoka">
+        <div class="exp-role">Data Collection Officer</div>
+        <div class="exp-company">Makoka & Associates — Malawi Social Registry</div>
+        <div class="exp-date">
+          <div class="exp-dot past"></div>
+          Aug 2025 – Nov 2025 · Lilongwe, Malawi
+        </div>
+        <ul class="exp-bullets">
+          <li class="exp-bullet">Achieved the highest household coverage on the project — earning a formal performance award for large-scale socioeconomic data collection.</li>
+          <li class="exp-bullet">Utilised GPS-enhanced software for precise spatial data tracking and geographic consistency checks across rural districts.</li>
+          <li class="exp-bullet">Managed systematic data cleaning and quality verification prior to submission, maintaining dataset integrity across the full project lifecycle.</li>
+        </ul>
+      </div>
+
+      <div class="exp-panel" id="panel-smartex">
+        <div class="exp-role">Research Assistant — SMARTEX Project</div>
+        <div class="exp-company">LUANAR Directorate of Research and Outreach</div>
+        <div class="exp-date">
+          <div class="exp-dot past"></div>
+          Jul 2024 – Dec 2024 · Chikwawa, Malawi
+        </div>
+        <ul class="exp-bullets">
+          <li class="exp-bullet">Improved dataset accuracy using SurveyCTO by 90% before going through systematic data cleaning prior to submission</li>
+          
+        </ul>
+      </div>
+
+      <div class="exp-panel" id="panel-theirworld">
+        <div class="exp-role">Global Youth Ambassador</div>
+        <div class="exp-company">Theirworld</div>
+        <div class="exp-date">
+          <div class="exp-dot"></div>
+          Feb 2024 – Present · Remote
+        </div>
+        <ul class="exp-bullets">
+          <li class="exp-bullet">Serve as MEL Lead for the climate task team — designing monitoring frameworks and tracking education and climate impact indicators.</li>
+          <li class="exp-bullet">Participate in international policy discussions on ICT4D and digital inclusion, and engage in community outreach promoting educational technology adoption.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ EDUCATION ═══════════════ -->
+<section id="education">
+  <div class="section-label">04 / Education</div>
+  <h2 class="section-title">Academic <em>Background</em></h2>
+
+  <div class="edu-cards">
+    <div class="edu-card reveal">
+      <div class="edu-badge">Master's Degree — In Progress</div>
+      <div class="edu-degree">MSc Applied Data Science</div>
+      <div class="edu-uni">Lilongwe University of Agriculture and Natural Resources (LUANAR) · Lilongwe, Malawi</div>
+      <div class="edu-gpa"> Sep 2024 – Pending</div>
+      <div class="edu-courses">
+        <span class="course-tag">Machine Learning</span>
+        <span class="course-tag">Big Data Analytics</span>
+        <span class="course-tag">Advanced DBMS</span>
+        <span class="course-tag">Deep Learning</span>
+        <span class="course-tag">Research Methods</span>
+        <span class="course-tag">Econometric Modelling</span>
+      </div>
+    </div>
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-badge">Bachelor's Degree</div>
+      <div class="edu-degree">BSc Development Economics</div>
+      <div class="edu-uni">Lilongwe University of Agriculture and Natural Resources (LUANAR) · Lilongwe, Malawi</div>
+      <div class="edu-gpa"> Nov 2019 – May 2024</div>
+      <div class="edu-courses">
+        <span class="course-tag">Econometrics</span>
+        <span class="course-tag">Financial Accounting</span>
+        <span class="course-tag">Statistics</span>
+        <span class="course-tag">Health Economics</span>
+        <span class="course-tag">Research Methods</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ AWARDS ═══════════════ -->
+<section id="awards">
+  <div class="section-label">05 / Recognition</div>
+  <h2 class="section-title">Awards &amp; <em>Certifications</em></h2>
+  <div class="awards-list">
+    <div class="award-item reveal">
+      <div class="award-year">2024</div>
+      <div class="award-text">
+        <strong>🏆 USAID Youth Well-Being Prize — Top 50 Finalist</strong>
+        From 4,300 global applications · EmpowerBros Mental-Health Project
+      </div>
+    </div>
+    <div class="award-item reveal reveal-delay-1">
+      <div class="award-year">2024</div>
+      <div class="award-text">
+        <strong>🏅 Learning Planet Youth Design Challenge — Top 60</strong>
+        From 3,200 global registrations · EmpowerBros Mental-Health Project &amp; Education
+      </div>
+    </div>
+    <div class="award-item reveal reveal-delay-2">
+      <div class="award-year">2025</div>
+      <div class="award-text">
+        <strong>🔬 LUANAR ACE II AF-APA Research Grant</strong>
+        Competitive grant awarded for CARP-E AI Agricultural Project
+      </div>
+    </div>
+    <div class="award-item reveal">
+      <div class="award-year">2025</div>
+      <div class="award-text">
+        <strong>📊 Research Data Management — Elwazi OpenData Platform</strong>
+        Data governance, ethical AI, GDPR compliance
+      </div>
+    </div>
+    <div class="award-item reveal reveal-delay-1">
+      <div class="award-year">2025</div>
+      <div class="award-text">
+        <strong>🤖 Data Collection &amp; Machine Learning Workshop</strong>
+        ML fundamentals, field data systems, model deployment · LUANAR
+      </div>
+    </div>
+    <div class="award-item reveal reveal-delay-2">
+      <div class="award-year">2025</div>
+      <div class="award-text">
+        <strong>⚡ Data Science Hackathon Participant</strong>
+        Rapid prototyping, AI applications, collaborative problem-solving · LUANAR
+      </div>
+    </div>
+    <div class="award-item reveal">
+      <div class="award-year">2024</div>
+      <div class="award-text">
+        <strong>🌱 Bayer Safe Use Ambassador Program</strong>
+        Certified Ambassador · Bayer AG
+      </div>
+    </div>
+    <div class="award-item reveal reveal-delay-1">
+      <div class="award-year">2025</div>
+      <div class="award-text">
+        <strong>🎓 Academic Mentor — LUANAR</strong>
+        Selected Oct 2025 to support undergraduates in data science and quantitative research
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ GITHUB STATS ═══════════════ -->
+<section id="stats">
+  <div class="section-label">06 / GitHub</div>
+  <h2 class="section-title">Open Source <em>Activity</em></h2>
+  <div class="stats-img-row reveal">
+    <img
+      src="https://github-readme-stats.vercel.app/api?username=kwawachi&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1321&title_color=00D9FF&icon_color=00D9FF&text_color=E8EDF5&count_private=true"
+      alt="GitHub Stats"
+      height="170"
+    />
+    <img
+      src="https://github-readme-streak-stats.herokuapp.com/?user=kwawachi&theme=tokyonight&hide_border=true&background=0D1321&ring=00D9FF&fire=F59E0B&currStreakLabel=00D9FF"
+      alt="GitHub Streak"
+      height="170"
+    />
+    <img
+      src="https://github-readme-stats.vercel.app/api/top-langs/?username=kwawachi&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1321&title_color=00D9FF&text_color=E8EDF5&hide=html,css&langs_count=6"
+      alt="Top Languages"
+      height="170"
+    />
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section id="contact">
+  <div class="section-label">07 / Contact</div>
+  <div class="contact-wrap">
+    <div>
+      <h2 class="contact-headline">Let's Build<br/><em>Something</em><br/>Together</h2>
+      <p class="contact-desc">
+        Open to data analyst roles, research collaborations, and freelance data science work. Based in Lilongwe, Malawi — available remotely worldwide.
+      </p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:christopherchisi07@gmail.com">
+          <span class="contact-link-icon">✉️</span>
+          <span class="contact-link-text">
+            <strong>christopherchisi07@gmail.com</strong>
+            Send me an email
+          </span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/christopherchisi" target="_blank">
+          <span class="contact-link-icon">💼</span>
+          <span class="contact-link-text">
+            <strong>linkedin.com/in/christopherchisi</strong>
+            Connect on LinkedIn
+          </span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://github.com/kwawachi" target="_blank">
+          <span class="contact-link-icon">🐙</span>
+          <span class="contact-link-text">
+            <strong>github.com/kwawachi</strong>
+            View my repositories
+          </span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://empowerbros-kappa.vercel.app" target="_blank">
+          <span class="contact-link-icon">🌐</span>
+          <span class="contact-link-text">
+            <strong>empowerbros-kappa.vercel.app</strong>
+            EmpowerBros live project
+          </span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="tel:+265990374881">
+          <span class="contact-link-icon">📱</span>
+          <span class="contact-link-text">
+            <strong>+265 99 037 48 81</strong>
+            WhatsApp / call
+          </span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="assets/resume.pdf" download>
+          <span class="contact-link-icon">📄</span>
+          <span class="contact-link-text">
+            <strong>Download CV</strong>
+            Full curriculum vitae (PDF)
+          </span>
+          <span class="contact-link-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label>Name</label>
+            <input type="text" placeholder="Your name" />
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Subject</label>
+          <input type="text" placeholder="What's this about?" />
+        </div>
+        <div class="form-field">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your project or opportunity..."></textarea>
+        </div>
+        <div>
+          <button class="btn-primary" onclick="sendEmail()">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-copy">
+    © 2026 <span>Christopher Kwawa Chisi</span> · Lilongwe, Malawi 🇲🇼
+  </div>
+  <div class="footer-socials">
+    <a class="social-btn" href="https://github.com/kwawachi" target="_blank">GitHub</a>
+    <a class="social-btn" href="https://linkedin.com/in/christopherchisi" target="_blank">LinkedIn</a>
+    <a class="social-btn" href="mailto:christopherchisi07@gmail.com">Email</a>
+    <a class="social-btn" href="https://empowerbros-kappa.vercel.app" target="_blank">EmpowerBros</a>
+  </div>
+</footer>
+
+<!-- ═══════════════ JS ═══════════════ -->
+<script>
+/* ── Cursor ── */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCursor() {
+  rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+})();
+document.querySelectorAll('a,button,.proj-card,.exp-tab').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.width = '18px'; cursor.style.height = '18px'; ring.style.width = '50px'; ring.style.height = '50px'; });
+  el.addEventListener('mouseleave', () => { cursor.style.width = '10px'; cursor.style.height = '10px'; ring.style.width = '36px'; ring.style.height = '36px'; });
+});
+
+/* ── Typing SVG ── */
+const lines = [
+  'Data Analyst',
+  'Junior Data Scientist',
+  'ML & Predictive Analytics',
+  'Power BI / Tableau Engineer',
+  'ETL Pipeline Builder',
+  'USAID Prize Finalist 🌍',
+];
+let li = 0, ci = 0, deleting = false;
+const el = document.getElementById('typed-text');
+function type() {
+  const w = lines[li];
+  if (!deleting) {
+    el.textContent = w.slice(0, ++ci);
+    if (ci === w.length) { deleting = true; setTimeout(type, 2000); return; }
+  } else {
+    el.textContent = w.slice(0, --ci);
+    if (ci === 0) { deleting = false; li = (li + 1) % lines.length; }
+  }
+  setTimeout(type, deleting ? 40 : 80);
+}
+type();
+
+/* ── Scroll reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── Experience tabs ── */
+document.querySelectorAll('.exp-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.exp-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.exp-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+  });
+});
+
+/* ── Nav scroll shrink ── */
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.padding = window.scrollY > 40 ? '0.7rem 3rem' : '1.2rem 3rem';
+});
+
+/* ── Contact form mailto ── */
+function sendEmail() {
+  const inputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+  const [name, email, subject, message] = [...inputs].map(i => encodeURIComponent(i.value));
+  window.location.href = `mailto:christopherchisi07@gmail.com?subject=${subject}&body=From: ${name} (${email})%0A%0A${message}`;
+}
+</script>
+
+</body>
+</html>
